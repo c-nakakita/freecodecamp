@@ -14,17 +14,18 @@ class SudokuSolver {
 
   checkRowPlacement(puzzleString, row, column, value) {
     const rowStr = this._getRow(puzzleString, row);
-    return !rowStr.includes(value);
+    return rowStr.charAt(column - 1) == value || !rowStr.includes(value);
   }
 
   checkColPlacement(puzzleString, row, column, value) {
     let colStr = this._getCol(puzzleString, column);
-    return !colStr.includes(value);
+    return colStr.charAt(row -1) == value || !colStr.includes(value);
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
     const regStr = this._getReg(puzzleString, row, column);
-    return !regStr.includes(value);
+    const idx = ((column - 1) % 3) + 3 * ((row - 1) % 3);
+    return regStr.charAt(idx) == value || !regStr.includes(value);
   }
 
   _getRow(puzzleString, row) {
