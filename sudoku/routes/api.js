@@ -22,7 +22,7 @@ module.exports = function (app) {
         }
       });
       if (reqErrFlg) {
-        res.json('Required field(s) missing');
+        res.json({ error: 'Required field(s) missing' });
       }
       const puzzle = req.body.puzzle;
       const puzzleCheckErr = solver.validate(puzzle);
@@ -66,6 +66,12 @@ module.exports = function (app) {
 
   app.route('/api/solve')
     .post((req, res) => {
+      if (req.body.puzzle === undefined
+        || req.body.puzzle === ''
+      ) {
+        res.json({ error: 'Required field missing' });
+        return;
+      }
       const puzzle = req.body.puzzle;
       const puzzleCheckErr = solver.validate(puzzle);
       if (puzzleCheckErr) {

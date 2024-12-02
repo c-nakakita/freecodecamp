@@ -190,7 +190,8 @@ suite('Functional Tests', () => {
                     .send(tmpData)
                     .end((err, res) => {
                         assert.equal(res.status, 200);
-                        assert.equal(res.body, 'Required field(s) missing');
+                        assert.isDefined(res.body.error);
+                        assert.equal(res.body.error, 'Required field(s) missing');
                     });
             });
         });
